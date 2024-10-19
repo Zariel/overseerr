@@ -587,18 +587,23 @@ class Settings {
 
     if (!fs.existsSync(SETTINGS_PATH)) {
       this.save();
-    }
-    const data = fs.readFileSync(SETTINGS_PATH, 'utf-8');
-
-    if (data) {
-      this.data = merge(this.data, JSON.parse(data));
-      this.save();
+    } else {
+      const data = fs.readFileSync(SETTINGS_PATH, 'utf-8');
+      if (data) {
+        this.data = merge(this.data, JSON.parse(data));
+        this.save();
+      }
     }
     return this;
   }
 
+  private lastWrote?: string;
   public save(): void {
-    fs.writeFileSync(SETTINGS_PATH, JSON.stringify(this.data, undefined, ' '));
+    const last = this.lastWrote;
+    this.lastWrote = JSON.stringify(this.data, undefined, ' ');
+    if (last !== this.lastWrote) {
+      fs.writeFileSync(SETTINGS_PATH, this.lastWrote, { flag: 'rs+' });
+    }
   }
 }
 
