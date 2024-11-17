@@ -598,7 +598,9 @@ class Settings {
   }
 
   public save(): void {
-    fs.writeFileSync(SETTINGS_PATH, JSON.stringify(this.data, undefined, ' '));
+    const tmp = SETTINGS_PATH + '.tmp';
+    fs.writeFileSync(tmp, JSON.stringify(this.data, undefined, ' '), { flush: true });
+    fs.renameSync(tmp, SETTINGS_PATH);
   }
 }
 
