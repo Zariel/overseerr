@@ -38,11 +38,11 @@ WORKDIR /app
 
 RUN apk add --no-cache tzdata tini && rm -rf /tmp/*
 
-RUN corepack enable && yarn
-
 # copy from build image
 COPY --from=build /app ./
 COPY --from=build /app/.yarn ./.yarn
+
+RUN corepack enable && yarn
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD [ "yarn", "start" ]
