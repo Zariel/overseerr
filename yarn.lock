@@ -5145,7 +5145,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:14 || 16 || 17, @types/node@npm:17.0.36":
+"@types/node@npm:*, @types/node@npm:14 || 16 || 17":
   version: 17.0.36
   resolution: "@types/node@npm:17.0.36"
   checksum: 10c0/cafd1e1f84835d0b2649d2d6ef59a8f1757e2a4a2285d0d4beb2f10f497514ef585a0959282a1147c78428cb7c29cc6572c4d488690d1c9714e7efcc4ca4c03c
@@ -5156,6 +5156,15 @@ __metadata:
   version: 14.18.36
   resolution: "@types/node@npm:14.18.36"
   checksum: 10c0/9742b62fee705cbb177b681e849640834ea3651ea90c7bfea07462dc7511eb73116a12b32c01157b591ebaaed9ece8042016f2a78b50396883f1358a18903fe2
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:~20":
+  version: 20.17.6
+  resolution: "@types/node@npm:20.17.6"
+  dependencies:
+    undici-types: "npm:~6.19.2"
+  checksum: 10c0/5918c7ff8368bbe6d06d5e739c8ae41a9db41628f28760c60cda797be7d233406f07c4d0e6fdd960a0a342ec4173c2217eb6624e06bece21c1f1dd1b92805c15
   languageName: node
   linkType: hard
 
@@ -14138,7 +14147,7 @@ __metadata:
     "@types/express": "npm:4.17.17"
     "@types/express-session": "npm:1.17.6"
     "@types/lodash": "npm:4.14.191"
-    "@types/node": "npm:17.0.36"
+    "@types/node": "npm:~20"
     "@types/node-schedule": "npm:2.1.0"
     "@types/nodemailer": "npm:6.4.7"
     "@types/react": "npm:18.0.28"
@@ -17991,6 +18000,13 @@ __metadata:
   version: 1.13.6
   resolution: "underscore@npm:1.13.6"
   checksum: 10c0/5f57047f47273044c045fddeb8b141dafa703aa487afd84b319c2495de2e685cecd0b74abec098292320d518b267c0c4598e45aa47d4c3628d0d4020966ba521
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~6.19.2":
+  version: 6.19.8
+  resolution: "undici-types@npm:6.19.8"
+  checksum: 10c0/078afa5990fba110f6824823ace86073b4638f1d5112ee26e790155f481f2a868cc3e0615505b6f4282bdf74a3d8caad715fd809e870c2bb0704e3ea6082f344
   languageName: node
   linkType: hard
 

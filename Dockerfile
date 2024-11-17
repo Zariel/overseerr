@@ -1,4 +1,5 @@
-FROM node:18.18-alpine AS BUILD_IMAGE
+ARG NODE_VERSION=20.18-alpine
+FROM node:$NODE_VERSION AS build
 
 WORKDIR /app
 
@@ -15,33 +16,31 @@ RUN \
   esac
 
 COPY package.json yarn.lock ./
-RUN CYPRESS_INSTALL_BINARY=0 yarn install --frozen-lockfile --network-timeout 1000000
+RUN corepack enable \
+  && CYPRESS_INSTALL_BINARY=0 yarn install --frozen-lockfile --network-timeout 1000000
 
 COPY . ./
 
 ARG COMMIT_TAG
 ENV COMMIT_TAG=${COMMIT_TAG}
 
-RUN yarn build
+  # remove development dependencies
+RUN corepack enable \
+  && yarn install \
+  && yarn build \
+  && rm -rf src server .next/cache \
+  && touch config/DOCKER \
+  && echo "{\"commitTag\": \"${COMMIT_TAG}\"}" > committag.json
 
-# remove development dependencies
-RUN yarn install --production --ignore-scripts --prefer-offline
-
-RUN rm -rf src server .next/cache
-
-RUN touch config/DOCKER
-
-RUN echo "{\"commitTag\": \"${COMMIT_TAG}\"}" > committag.json
-
-
-FROM node:18.18-alpine
+FROM node:$NODE_VERSION
 
 WORKDIR /app
 
 RUN apk add --no-cache tzdata tini && rm -rf /tmp/*
 
 # copy from build image
-COPY --from=BUILD_IMAGE /app ./
+COPY --from=build /app ./
+COPY --from=build /app/.yarn ./.yarn
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD [ "yarn", "start" ]
