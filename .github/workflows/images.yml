@@ -1,6 +1,10 @@
 name: Overseerr CI
 
-on: workflow_dispatch
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - develop
 
 env:
   REGISTRY: ghcr.io
