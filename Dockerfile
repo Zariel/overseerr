@@ -1,5 +1,5 @@
 ARG NODE_VERSION=20.18-alpine
-ARG COMMIT_TAG
+
 FROM node:$NODE_VERSION AS build
 
 WORKDIR /app
@@ -22,6 +22,7 @@ RUN corepack enable \
 
 COPY . ./
 
+ARG COMMIT_TAG=local
 ENV COMMIT_TAG=${COMMIT_TAG}
 
   # remove development dependencies
@@ -39,10 +40,13 @@ RUN apk add --no-cache tzdata tini && rm -rf /tmp/*
 # copy from build image
 COPY --from=build /app ./
 
+ARG COMMIT_TAG=local
+ENV NODE_ENV=production \
+  COMMIT_TAG=${COMMIT_TAG}
+
 RUN touch config/DOCKER \
   && echo "{\"commitTag\": \"${COMMIT_TAG}\"}" > committag.json
 
-ENV NODE_ENV=production
 ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD [ "node", "dist/index.js" ]
 
